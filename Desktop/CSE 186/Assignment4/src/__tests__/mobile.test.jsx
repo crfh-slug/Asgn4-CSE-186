@@ -11,7 +11,9 @@
 
 import {it, beforeAll, beforeEach} from 'vitest';
 import {render, screen} from '@testing-library/react';
+import {userEvent} from '@testing-library/user-event';
 import App from '../App';
+import {expect} from 'vitest';
 
 import loader from '../data/loader';
 
@@ -53,7 +55,7 @@ it('Show Header CSE168 Mail - Inbox', async () => {
 
 it('Show menu icon nex to the Title', async () => {
   render(<App />);
-  screen.getByLabelText('menu');
+  screen.getByLabelText('show mailboxes');
 });
 
 it('Show First Entry From, Subject, Received', async () => {
@@ -68,5 +70,58 @@ it('Show Second Entry From, Subject, Received', async () => {
   screen.getByText('Doretta Vittore');
   screen.getByText('Tribute to a Bad Man');
   screen.getByText('2023-08-22T18:30:44Z');
+});
+
+it('Click Menu', async () => {
+  render(<App />);
+  const menuButton = screen.getByLabelText('show mailboxes');
+
+  await userEvent.click(menuButton);
+
+  expect(screen.getByLabelText('Inbox')).toBeInTheDocument();
+  expect(screen.getByLabelText('Important')).toBeInTheDocument();
+  expect(screen.getByLabelText('Trash')).toBeInTheDocument();
+});
+
+it('Change title when menu item clicked', async () => {
+  render(<App />);
+  const menuButton = screen.getByLabelText('show mailboxes');
+  screen.getByText('CSE186 Mail - Inbox');
+
+  // Open the menu
+  await userEvent.click(menuButton);
+  await userEvent.click(screen.getByText('Trash'));
+  expect(screen.getByText('CSE186 Mail - Trash'));
+});
+
+it('Change aria-label change when menu item clicked', async () => {
+  render(<App />);
+  const menuButton = screen.getByLabelText('show mailboxes');
+  screen.getByText('CSE186 Mail - Inbox');
+
+  // Open the menu
+  await userEvent.click(menuButton);
+  expect(screen.getByLabelText('hide mailboxes'));
+  await userEvent.click(menuButton);
+  expect(screen.getByLabelText('show mailboxes'));
+});
+
+it('Change emails when menu item clicked', async () => {
+  render(<App />);
+  const menuButton = screen.getByLabelText('show mailboxes');
+
+  // Open the menu
+  await userEvent.click(menuButton);
+  await userEvent.click(screen.getByText('Trash'));
+
+  screen.getByText('Cyrus Bellamy');
+  screen.getByText('Margot at the Wedding');
+  screen.getByText('2022-03-14T00:30:15Z');
+});
+
+it('', async () => {
+  render(<App />);
+
+  screen.getByText('From: Jonie Putland (@jputland0@geocities.jp)');
 });
 
