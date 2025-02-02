@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import {useEmail} from './EmailContext';
 import mail from './data/mail.json';
 import {useHeader} from './HeaderContext';
+import Box from '@mui/material/Box';
 
 /**
  * This file displays the inbox and sets the selected
@@ -21,24 +22,26 @@ function InboxPage() {
   const mailLabel = mail.find((m) => m.name === navPage);
 
   return (
-    <table>
-      <tbody>
-        {mailLabel.mail.map((email) => (
-          <tr key={email.id}
-            onClick = {() => {
-              setSelectedEmail(email);
-              navigate(`/email/${email.id}`);
-              handleEmailClick(email.id);
-            }}
-            style={{cursor: 'pointer'}}>
-            <td>{email.from.name}</td>
-            <td>{email.subject}</td>
-            <td>{email.received}</td>
-          </tr>
-        ),
-        )}
-      </tbody>
-    </table>
+    <Box sx={{mt: 6}}>
+      <table>
+        <tbody>
+          {mailLabel.mail.map((email) => (
+            <tr key={email.id}
+              onClick = {() => {
+                setSelectedEmail(email);
+                navigate(`/email/${email.id}`);
+                handleEmailClick(email.id);
+              }}
+              style={{cursor: 'pointer'}}>
+              <td>{email.from.name}</td>
+              <td>{email.subject}</td>
+              <td>{email.received}</td>
+            </tr>
+          ),
+          )}
+        </tbody>
+      </table>
+    </Box>
   );
 }
 

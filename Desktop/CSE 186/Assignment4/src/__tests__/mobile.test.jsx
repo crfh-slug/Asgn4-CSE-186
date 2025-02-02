@@ -119,9 +119,65 @@ it('Change emails when menu item clicked', async () => {
   screen.getByText('2022-03-14T00:30:15Z');
 });
 
-it('', async () => {
+it('Content of email is rendered', async () => {
   render(<App />);
-
+  const emailButton = screen.getByText('Jonie Putland');
+  await userEvent.click(emailButton);
   screen.getByText('From: Jonie Putland (@jputland0@geocities.jp)');
+  screen.getByText('Received: 2022-01-31T01:43:14Z');
+  screen.getByText('Magic of Ordinary Days, The');
+  screen.getByText('Fusce posuere felis sed lacus. Morbi sem mauris,' +
+    ' laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus' +
+    ' dui vel sem. Sed sagittis. Nam congue, risus semper porta' +
+    ' volutpat, quam pede lobortis ligula, sit amet eleifend pede' +
+    ' libero quis orci. Nullam molestie nibh in lectus.');
 });
 
+it('Content of important email is rendered', async () => {
+  render(<App />);
+  const menuButton = screen.getByLabelText('show mailboxes');
+  await userEvent.click(menuButton);
+  await userEvent.click(screen.getByLabelText('Important'));
+
+  expect(screen.getByText('Davis Nicholas'));
+  expect(screen.getByText('Wonder Bar'));
+  expect(screen.getByText('2024-12-15T18:06:48Z'));
+});
+
+it('Go Back once reading an email', async () => {
+  render(<App />);
+  const emailButton = screen.getByText('Jonie Putland');
+  await userEvent.click(emailButton);
+  screen.getByText('From: Jonie Putland (@jputland0@geocities.jp)');
+  screen.getByText('Received: 2022-01-31T01:43:14Z');
+  screen.getByText('Magic of Ordinary Days, The');
+  screen.getByText('Fusce posuere felis sed lacus. Morbi sem mauris,' +
+    ' laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus' +
+    ' dui vel sem. Sed sagittis. Nam congue, risus semper porta' +
+    ' volutpat, quam pede lobortis ligula, sit amet eleifend pede' +
+    ' libero quis orci. Nullam molestie nibh in lectus.');
+
+  const backButton = screen.getByLabelText('go back');
+  await userEvent.click(backButton);
+
+  screen.getByText('Jonie Putland');
+  screen.getByText('Magic of Ordinary Days, The');
+  screen.getByText('2022-01-31T01:43:14Z');
+});
+
+/*
+const emailButton = screen.getByText('Davis Nicholas');
+  await userEvent.click(emailButton);
+  screen.getByText('From: Davis Nicholas (@dnicholas0@msu.edu)');
+  screen.getByText('To: Mail User (user@mail.com)');
+  screen.getByText('Received: 2024-12-15T18:06:48Z');
+  screen.getByText('Wonder Bar');
+  screen.getByText('Quisque id justo sit amet sapien dignissim vestibulum. ' +
+    'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices ' +
+    'posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, ' +
+    'sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est ' +
+    'lacinia nisi venenatis tristique. Fusce congue, diam id ornare' +
+    '  imperdiet, sapien urna pretium nisl, ut volutpat sapien' +
+    ' arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. ' +
+    'Etiam pretium iaculis justo.');
+*/

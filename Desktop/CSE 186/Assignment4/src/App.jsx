@@ -17,9 +17,9 @@ function App() {
           <Layout>
             <Routes>
               <Route path='/' element={<InboxPage />} />
-              <Route path='/email/:id' element={<EmailDetailsPage />} />
               <Route path='/important' element={<InboxPage />} />
               <Route path='/trash' element={<InboxPage />} />;
+              <Route path='/email/:id' element={<EmailDetailsPage />} />
             </Routes>
           </Layout>
         </Router>
