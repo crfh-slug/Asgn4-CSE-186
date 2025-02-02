@@ -13,14 +13,12 @@ function EmailDetailsPage() {
   if (!selectedEmail) {
     return (
       <div style={{padding: '20px'}}>
-        <Button variant="contained" onClick={() => navigate('/')}>
+        <Button variant="container" onClick={() => navigate('/')}>
           Go to Inbox
         </Button>
       </div>
     );
   }
-
-  console.log('I made it!');
 
   return (
     <div>
@@ -28,9 +26,8 @@ function EmailDetailsPage() {
       <p>To: {selectedEmail.to.name} ({selectedEmail.to.address})</p>
       <p>Received: {selectedEmail.received}</p>
       <p>{selectedEmail.subject}</p>
-      <br />
       <p>{selectedEmail.content}</p>
-      <Button variant="contained"
+      <Button variant="container"
         onClick={() => navigate('/')}>
           Back to Inbox
       </Button>
