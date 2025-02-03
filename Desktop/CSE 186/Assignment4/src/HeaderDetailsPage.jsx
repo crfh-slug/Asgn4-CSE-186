@@ -14,6 +14,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 import {useNavigate} from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 import {useHeader} from './HeaderContext';
 
 /**
@@ -35,7 +36,7 @@ function HeaderDetailsPage() {
   };
 
   return (
-    <Box sx={{display: 'flex'}}>
+    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
       <CssBaseline />
       <AppBar
         position='fixed'
@@ -50,9 +51,17 @@ function HeaderDetailsPage() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap
+            sx={{flexGrow: 1, textAlign: 'left'}}>
             CSE186 Mail - {navPage}
           </Typography>
+          <IconButton
+            color='inherit'
+            aria-label='close mail reader'
+            edge='end'
+            onClick={() => navigate('/')}>
+            <CloseIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 

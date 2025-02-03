@@ -1,6 +1,6 @@
 import {useNavigate} from 'react-router-dom';
+import {useEffect} from 'react';
 import {useEmail} from './EmailContext';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 /**
@@ -11,15 +11,14 @@ function EmailDetailsPage() {
   const {selectedEmail} = useEmail();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!selectedEmail) {
+      navigate('/');
+    }
+  }, [selectedEmail, navigate]);
+
   if (!selectedEmail) {
-    return (
-      <div style={{padding: '20px'}}>
-        <Button variant="container"
-          onClick={() => navigate('/')}>
-          Go to Inbox
-        </Button>
-      </div>
-    );
+    return null;
   }
 
   return (
@@ -29,10 +28,6 @@ function EmailDetailsPage() {
       <p>Received: {selectedEmail.received}</p>
       <p>{selectedEmail.subject}</p>
       <p>{selectedEmail.content}</p>
-      <Button variant="contained" aria-label = 'go back'
-        onClick={() => navigate('/')}>
-          Back to Inbox
-      </Button>
     </Box>
   );
 }

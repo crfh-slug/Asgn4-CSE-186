@@ -18,7 +18,7 @@ function InboxPage() {
   const mailLabel = mail.find((m) => m.name === navPage);
 
   return (
-    <Box sx={{mt: 6}}>
+    <Box sx={{mt: 6, display: 'flex', justifyContent: 'space-between'}}>
       <table>
         <tbody>
           {mailLabel.mail.map((email) => (

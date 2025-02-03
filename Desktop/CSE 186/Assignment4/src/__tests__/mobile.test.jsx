@@ -157,27 +157,10 @@ it('Go Back once reading an email', async () => {
     ' volutpat, quam pede lobortis ligula, sit amet eleifend pede' +
     ' libero quis orci. Nullam molestie nibh in lectus.');
 
-  const backButton = screen.getByLabelText('go back');
+  const backButton = screen.getByLabelText('close mail reader');
   await userEvent.click(backButton);
 
   screen.getByText('Jonie Putland');
   screen.getByText('Magic of Ordinary Days, The');
   screen.getByText('2022-01-31T01:43:14Z');
 });
-
-/*
-const emailButton = screen.getByText('Davis Nicholas');
-  await userEvent.click(emailButton);
-  screen.getByText('From: Davis Nicholas (@dnicholas0@msu.edu)');
-  screen.getByText('To: Mail User (user@mail.com)');
-  screen.getByText('Received: 2024-12-15T18:06:48Z');
-  screen.getByText('Wonder Bar');
-  screen.getByText('Quisque id justo sit amet sapien dignissim vestibulum. ' +
-    'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices ' +
-    'posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, ' +
-    'sollicitudin ut, suscipit a, feugiat et, eros. Vestibulum ac est ' +
-    'lacinia nisi venenatis tristique. Fusce congue, diam id ornare' +
-    '  imperdiet, sapien urna pretium nisl, ut volutpat sapien' +
-    ' arcu sed augue. Aliquam erat volutpat. In congue. Etiam justo. ' +
-    'Etiam pretium iaculis justo.');
-*/
