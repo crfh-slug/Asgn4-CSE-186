@@ -166,5 +166,3 @@ it('go back is there when render', async () => {
 
   expect(screen.queryByLabelText('close mail reader')).not.toBeInTheDocument();
 });
-
-

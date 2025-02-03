@@ -63,11 +63,18 @@ function InboxPage() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
+            width: '100%',
             padding: '5px',
             cursor: 'pointer'}}>
-          <span>{email.from.name}</span>
-          <span>{email.subject}</span>
-          <span>{formatDate(email.received)}</span>
+          <span style={{width: '25%'}}>{email.from.name}</span>
+          <span style={{
+            width: '55%',
+            textAlign: 'left',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis'}}>
+            {email.subject}</span>
+          <span style={{width: '10%'}}>{formatDate(email.received)}</span>
         </div>
       ))}
     </Box>
