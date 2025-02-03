@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1738576808416" clover="3.2.0">
-  <project timestamp="1738576808416" name="All files">
-    <metrics statements="262" coveredstatements="262" conditionals="37" coveredconditionals="37" methods="18" coveredmethods="18" elements="317" coveredelements="317" complexity="0" loc="262" ncloc="262" packages="1" files="7" classes="7"/>
+<coverage generated="1738578835528" clover="3.2.0">
+  <project timestamp="1738578835528" name="All files">
+    <metrics statements="269" coveredstatements="269" conditionals="37" coveredconditionals="37" methods="18" coveredmethods="18" elements="324" coveredelements="324" complexity="0" loc="269" ncloc="269" packages="1" files="7" classes="7"/>
     <file name="App.jsx" path="/Users/christopherhein/Desktop/CSE 186/Assignment4/src/App.jsx">
       <metrics statements="24" coveredstatements="24" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
       <line num="1" count="1" type="stmt"/>
@@ -203,7 +203,7 @@
       <line num="115" count="1" type="stmt"/>
     </file>
     <file name="InboxPage.jsx" path="/Users/christopherhein/Desktop/CSE 186/Assignment4/src/InboxPage.jsx">
-      <metrics statements="61" coveredstatements="61" conditionals="13" coveredconditionals="13" methods="3" coveredmethods="3"/>
+      <metrics statements="68" coveredstatements="68" conditionals="13" coveredconditionals="13" methods="3" coveredmethods="3"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -261,10 +261,17 @@
       <line num="69" count="3314" type="stmt"/>
       <line num="70" count="3314" type="stmt"/>
       <line num="71" count="3314" type="stmt"/>
-      <line num="72" count="32" type="stmt"/>
-      <line num="73" count="32" type="stmt"/>
-      <line num="75" count="32" type="stmt"/>
-      <line num="77" count="1" type="stmt"/>
+      <line num="72" count="3314" type="stmt"/>
+      <line num="73" count="3314" type="stmt"/>
+      <line num="74" count="3314" type="stmt"/>
+      <line num="75" count="3314" type="stmt"/>
+      <line num="76" count="3314" type="stmt"/>
+      <line num="77" count="3314" type="stmt"/>
+      <line num="78" count="3314" type="stmt"/>
+      <line num="79" count="32" type="stmt"/>
+      <line num="80" count="32" type="stmt"/>
+      <line num="82" count="32" type="stmt"/>
+      <line num="84" count="1" type="stmt"/>
     </file>
     <file name="Layout.jsx" path="/Users/christopherhein/Desktop/CSE 186/Assignment4/src/Layout.jsx">
       <metrics statements="16" coveredstatements="16" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
