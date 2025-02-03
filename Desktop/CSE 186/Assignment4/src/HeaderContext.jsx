@@ -8,7 +8,7 @@ const HeaderContext = createContext();
 export const useHeader = () => useContext(HeaderContext);
 
 // EmailProvider Component
-export const HeaderProvider = ({children}) => {
+export const Header = ({children}) => {
   const [navPage, setNavPage] = useState('Inbox');
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -20,6 +20,6 @@ export const HeaderProvider = ({children}) => {
   );
 };
 
-HeaderProvider.propTypes = {children: PropTypes.node.isRequired};
+Header.propTypes = {children: PropTypes.node.isRequired};
 
-export default HeaderProvider;
+export default Header;

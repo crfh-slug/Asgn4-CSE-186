@@ -29,7 +29,7 @@ function EmailDetailsPage() {
       <p>Received: {selectedEmail.received}</p>
       <p>{selectedEmail.subject}</p>
       <p>{selectedEmail.content}</p>
-      <Button variant="container" aria-label = 'go back'
+      <Button variant="contained" aria-label = 'go back'
         onClick={() => navigate('/')}>
           Back to Inbox
       </Button>

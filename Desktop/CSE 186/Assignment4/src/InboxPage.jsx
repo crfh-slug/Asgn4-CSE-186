@@ -15,10 +15,6 @@ function InboxPage() {
   const {navPage} = useHeader();
   const navigate = useNavigate();
 
-  const handleEmailClick = (emailId) => {
-    navigate(`/email/${emailId}`);
-  };
-
   const mailLabel = mail.find((m) => m.name === navPage);
 
   return (
@@ -30,7 +26,6 @@ function InboxPage() {
               onClick = {() => {
                 setSelectedEmail(email);
                 navigate(`/email/${email.id}`);
-                handleEmailClick(email.id);
               }}
               style={{cursor: 'pointer'}}>
               <td>{email.from.name}</td>

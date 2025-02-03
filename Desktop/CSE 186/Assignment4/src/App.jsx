@@ -3,7 +3,7 @@ import {EmailProvider} from './EmailContext';
 import InboxPage from './InboxPage';
 import EmailDetailsPage from './EmailDetailsPage';
 import Layout from './Layout';
-import {HeaderProvider} from './HeaderContext';
+import {Header} from './HeaderContext';
 
 /**
  * Wraps everything with EmailProvider and handles routing.
@@ -12,8 +12,8 @@ import {HeaderProvider} from './HeaderContext';
 function App() {
   return (
     <EmailProvider>
-      <HeaderProvider>
-        <Router>
+      <Router>
+        <Header>
           <Layout>
             <Routes>
               <Route path='/' element={<InboxPage />} />
@@ -22,8 +22,8 @@ function App() {
               <Route path='/email/:id' element={<EmailDetailsPage />} />
             </Routes>
           </Layout>
-        </Router>
-      </HeaderProvider>
+        </Header>
+      </Router>
     </EmailProvider>
   );
 }
