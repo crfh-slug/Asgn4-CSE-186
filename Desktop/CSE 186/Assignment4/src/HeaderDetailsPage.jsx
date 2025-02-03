@@ -17,6 +17,7 @@ import {useNavigate} from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import {useHeader} from './HeaderContext';
 import {useEmail} from './EmailContext';
+import {useState, useEffect} from 'react';
 
 /**
  * Render the App Bar Menu on each page.
@@ -25,6 +26,7 @@ import {useEmail} from './EmailContext';
 function HeaderDetailsPage() {
   const {navPage, setNavPage, mobileOpen, setMobileOpen} = useHeader();
   const navigate = useNavigate();
+  const [isDesktop, setIsDesktop] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -36,6 +38,16 @@ function HeaderDetailsPage() {
     setMobileOpen(false); // Close drawer after navigation
   };
 
+  useEffect(() => {
+    // Check screen size and update isDesktop state
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 768); // Adjust breakpoint as needed
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on load
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const {selectedEmail} = useEmail();
   const {setSelectedEmail} = useEmail();
 
@@ -44,7 +56,9 @@ function HeaderDetailsPage() {
       <CssBaseline />
       <AppBar
         position='fixed'
-        sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
       >
         <Toolbar>
           <IconButton
@@ -55,6 +69,7 @@ function HeaderDetailsPage() {
               handleDrawerToggle();
               setSelectedEmail(null);
             }}
+            sx={{display: {sm: 'none'}}}
           >
             <MenuIcon />
           </IconButton>
@@ -71,6 +86,7 @@ function HeaderDetailsPage() {
                 setSelectedEmail(null);
                 navigate('/');
               }}
+              sx={{display: {sm: 'none'}}}
             >
               <CloseIcon />
             </IconButton>
@@ -83,10 +99,10 @@ function HeaderDetailsPage() {
         aria-label="mailbox folders"
       >
         <Drawer
-          variant="temporary"
+          variant={isDesktop ? 'permanent' : 'temporary'}
           open={Boolean(mobileOpen)}
           onClose={handleDrawerToggle}
-          PaperProps={{style: {width: '250px'}}}
+          PaperProps={{style: {width: '15%'}}}
           ModalProps={{keepMounted: true}}
         >
           <Toolbar />

@@ -3,7 +3,7 @@ import {useEmail} from './EmailContext';
 import mail from './data/mail.json';
 import {useHeader} from './HeaderContext';
 import Box from '@mui/material/Box';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 /**
  * This file displays the inbox and sets the selected
@@ -15,6 +15,17 @@ function InboxPage() {
   const {setSelectedEmail} = useEmail();
   const {navPage} = useHeader();
   const navigate = useNavigate();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    // Check screen size and update isDesktop state
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 768); // Adjust breakpoint as needed
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on load
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const mailLabel = mail.find((m) => m.name === navPage);
 
@@ -53,32 +64,42 @@ function InboxPage() {
 
   return (
     <Box sx={{
-      mt: 6, display: 'flex', flexDirection: 'column', gap: '10px'}}>
-      {sortedEmails.map((email) => (
-        <div key={email.id}
-          onClick = {() => {
-            setSelectedEmail(email);
-            navigate(`/email/${email.id}`);
-          }}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            padding: '5px',
-            cursor: 'pointer'}}>
-          <span style={{width: '25%'}}>{email.from.name}</span>
-          <span style={{
-            width: '45%',
-            textAlign: 'left',
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis'}}>
-            {email.subject}</span>
-          <span style={{width: '20%',
-            textAlign: 'left',
-          }}>{formatDate(email.received)}</span>
-        </div>
-      ))}
+      mt: 6, display: 'flex', flexDirection:
+      isDesktop ? 'row' : 'column', gap: '10px'}}>
+      <Box sx={{
+        width: isDesktop ? '45%' : '100%',
+        marginLeft: isDesktop ? '15%' : '0%',
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+      }}>
+        {sortedEmails.map((email) => (
+          <div key={email.id}
+            onClick = {() => {
+              setSelectedEmail(email);
+              navigate(`/email/${email.id}`);
+            }}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              width: '100%',
+              padding: '5px',
+              cursor: 'pointer'}}>
+            <span style={{width: '25%'}}>{email.from.name}</span>
+            <span style={{
+              width: '50%',
+              textAlign: 'left',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis'}}>
+              {email.subject}</span>
+            <span style={{width: '15%',
+              textAlign: 'left',
+            }}>{formatDate(email.received)}</span>
+          </div>
+        ))}
+      </Box>
     </Box>
   );
 }
