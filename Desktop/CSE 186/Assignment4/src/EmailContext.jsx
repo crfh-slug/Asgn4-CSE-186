@@ -23,3 +23,5 @@ export const EmailProvider = ({children}) => {
 EmailProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default EmailProvider;

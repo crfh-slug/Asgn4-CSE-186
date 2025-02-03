@@ -17,25 +17,45 @@ function InboxPage() {
 
   const mailLabel = mail.find((m) => m.name === navPage);
 
+  const sortedEmails = mailLabel.mail.sort((a, b) => {
+    const dateA = new Date(a.received);
+    const dateB = new Date(b.received);
+    return dateB - dateA;
+  });
+
+  const formatDate = (receivedDate) => {
+    const date = new Date(receivedDate);
+    const now = new Date();
+
+    if (date.toDateString() === now.toDateString()) {
+      return `${String(date.getHours())
+          .padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+    } else if (date.getFullYear() === now.getFullYear()) {
+      const options = {month: 'short', day: 'numeric'};
+      return date.toLocaleDateString('en-US', options);
+    } else {
+      return date.getFullYear();
+    }
+  };
+
   return (
-    <Box sx={{mt: 6, display: 'flex', justifyContent: 'space-between'}}>
-      <table>
-        <tbody>
-          {mailLabel.mail.map((email) => (
-            <tr key={email.id}
-              onClick = {() => {
-                setSelectedEmail(email);
-                navigate(`/email/${email.id}`);
-              }}
-              style={{cursor: 'pointer'}}>
-              <td>{email.from.name}</td>
-              <td>{email.subject}</td>
-              <td>{email.received}</td>
-            </tr>
-          ),
-          )}
-        </tbody>
-      </table>
+    <Box sx={{mt: 6, display: 'flex', flexDirection: 'column', gap: '10px'}}>
+      {sortedEmails.map((email) => (
+        <div key={email.id}
+          onClick = {() => {
+            setSelectedEmail(email);
+            navigate(`/email/${email.id}`);
+          }}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '5px',
+            cursor: 'pointer'}}>
+          <span>{email.from.name}</span>
+          <span>{email.subject}</span>
+          <span>{formatDate(email.received)}</span>
+        </div>
+      ))}
     </Box>
   );
 }
