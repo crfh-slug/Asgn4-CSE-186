@@ -16,6 +16,7 @@ import Toolbar from '@mui/material/Toolbar';
 import {useNavigate} from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import {useHeader} from './HeaderContext';
+import {useEmail} from './EmailContext';
 
 /**
  * Render the App Bar Menu on each page.
@@ -35,6 +36,9 @@ function HeaderDetailsPage() {
     setMobileOpen(false); // Close drawer after navigation
   };
 
+  const {selectedEmail} = useEmail();
+  const {setSelectedEmail} = useEmail();
+
   return (
     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
       <CssBaseline />
@@ -47,7 +51,10 @@ function HeaderDetailsPage() {
             color="inherit"
             aria-label = {mobileOpen ? 'hide mailboxes' : 'show mailboxes'}
             edge="start"
-            onClick={handleDrawerToggle}
+            onClick= {() => {
+              handleDrawerToggle();
+              setSelectedEmail(null);
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -55,13 +62,19 @@ function HeaderDetailsPage() {
             sx={{flexGrow: 1, textAlign: 'left'}}>
             CSE186 Mail - {navPage}
           </Typography>
-          <IconButton
-            color='inherit'
-            aria-label='close mail reader'
-            edge='end'
-            onClick={() => navigate('/')}>
-            <CloseIcon />
-          </IconButton>
+          {selectedEmail && (
+            <IconButton
+              color='inherit'
+              aria-label='close mail reader'
+              edge='end'
+              onClick={() => {
+                setSelectedEmail(null);
+                navigate('/');
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
 

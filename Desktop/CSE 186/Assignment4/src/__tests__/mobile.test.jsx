@@ -60,7 +60,7 @@ it('Show menu icon nex to the Title', async () => {
 
 it('Show First Entry From, Subject, Received', async () => {
   render(<App />);
-  screen.findByText('Bob Dylan Like a Rolling Stone 17:15');
+  screen.getByText('Bob Dylan');
 });
 
 it('Click Menu', async () => {
@@ -110,16 +110,12 @@ it('Change emails when menu item clicked', async () => {
 
 it('Content of email is rendered', async () => {
   render(<App />);
-  const emailButton = screen.getByText('Jonie Putland');
+  const emailButton = screen.getByText('Bob Dylan');
   await userEvent.click(emailButton);
-  screen.getByText('From: Jonie Putland (@jputland0@geocities.jp)');
-  screen.getByText('Received: 2022-01-31T01:43:14Z');
-  screen.getByText('Magic of Ordinary Days, The');
-  screen.getByText('Fusce posuere felis sed lacus. Morbi sem mauris,' +
-    ' laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus' +
-    ' dui vel sem. Sed sagittis. Nam congue, risus semper porta' +
-    ' volutpat, quam pede lobortis ligula, sit amet eleifend pede' +
-    ' libero quis orci. Nullam molestie nibh in lectus.');
+  screen.getByText('From: Bob Dylan (@bob@bob.com)');
+  screen.getByText('To: App User (user@app.com)');
+  screen.getByText('Received: February 3, 2025 at 17:15');
+  screen.getByText('Like a Rolling Stone');
 });
 
 it('Content of important email is rendered', async () => {
@@ -133,19 +129,42 @@ it('Content of important email is rendered', async () => {
 
 it('Go Back once reading an email', async () => {
   render(<App />);
-  const emailButton = screen.getByText('Jonie Putland');
+  const emailButton = screen.getByText('Bob Dylan');
   await userEvent.click(emailButton);
-  screen.getByText('From: Jonie Putland (@jputland0@geocities.jp)');
-  screen.getByText('Received: 2022-01-31T01:43:14Z');
-  screen.getByText('Magic of Ordinary Days, The');
-  screen.getByText('Fusce posuere felis sed lacus. Morbi sem mauris,' +
-    ' laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus' +
-    ' dui vel sem. Sed sagittis. Nam congue, risus semper porta' +
-    ' volutpat, quam pede lobortis ligula, sit amet eleifend pede' +
-    ' libero quis orci. Nullam molestie nibh in lectus.');
+  screen.getByText('From: Bob Dylan (@bob@bob.com)');
+  screen.getByText('To: App User (user@app.com)');
+  screen.getByText('Received: February 3, 2025 at 17:15');
+  screen.getByText('Like a Rolling Stone');
 
   const backButton = screen.getByLabelText('close mail reader');
   await userEvent.click(backButton);
 
   screen.findByText('Jonie Putland Magic of Ordinary Days, The 2022');
 });
+
+it('Check if date is yesterday', async () => {
+  render(<App />);
+  screen.findByText('Yesterday');
+});
+
+it('Check if date is over one full year ago', async () => {
+  render(<App />);
+  screen.findByText('2024');
+});
+
+it('go back is there when render', async () => {
+  render(<App />);
+  expect(screen.queryByLabelText('close mail reader')).not.toBeInTheDocument();
+});
+
+it('go back is there when render', async () => {
+  render(<App />);
+  const emailButton = screen.getByText('Bob Dylan');
+  await userEvent.click(emailButton);
+  const menuButton = screen.getByLabelText('show mailboxes');
+  await userEvent.click(menuButton);
+
+  expect(screen.queryByLabelText('close mail reader')).not.toBeInTheDocument();
+});
+
+

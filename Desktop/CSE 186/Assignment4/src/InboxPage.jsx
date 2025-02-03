@@ -3,6 +3,7 @@ import {useEmail} from './EmailContext';
 import mail from './data/mail.json';
 import {useHeader} from './HeaderContext';
 import Box from '@mui/material/Box';
+import {useEffect} from 'react';
 
 /**
  * This file displays the inbox and sets the selected
@@ -23,14 +24,26 @@ function InboxPage() {
     return dateB - dateA;
   });
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [navPage]); // Runs whenever `navPage` changes
+
   const formatDate = (receivedDate) => {
     const date = new Date(receivedDate);
     const now = new Date();
 
+    const yesterday = new Date();
+    yesterday.setDate(now.getDate() - 1);
+
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(now.getFullYear()-1);
+
     if (date.toDateString() === now.toDateString()) {
       return `${String(date.getHours())
           .padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-    } else if (date.getFullYear() === now.getFullYear()) {
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return `Yesterday`;
+    } else if (date >= oneYearAgo) {
       const options = {month: 'short', day: 'numeric'};
       return date.toLocaleDateString('en-US', options);
     } else {
@@ -39,7 +52,8 @@ function InboxPage() {
   };
 
   return (
-    <Box sx={{mt: 6, display: 'flex', flexDirection: 'column', gap: '10px'}}>
+    <Box sx={{
+      mt: 6, display: 'flex', flexDirection: 'column', gap: '10px'}}>
       {sortedEmails.map((email) => (
         <div key={email.id}
           onClick = {() => {
