@@ -17,7 +17,13 @@ import {useNavigate} from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import {useHeader} from './HeaderContext';
 import {useEmail} from './EmailContext';
-import {useState, useEffect} from 'react';
+
+/**
+ * AppBar: https://mui.com/material-ui/react-app-bar/
+ * Drawer: https://mui.com/material-ui/react-drawer/
+ * ChatGPT: recommended "const navigate = useNavigate();"
+ * General understanding of useNavigate() https://www.geeksforgeeks.org/reactjs-usenavigate-hook/
+ */
 
 /**
  * Render the App Bar Menu on each page.
@@ -26,7 +32,6 @@ import {useState, useEffect} from 'react';
 function HeaderDetailsPage() {
   const {navPage, setNavPage, mobileOpen, setMobileOpen} = useHeader();
   const navigate = useNavigate();
-  const [isDesktop, setIsDesktop] = useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -37,16 +42,6 @@ function HeaderDetailsPage() {
     setNavPage(path.text);
     setMobileOpen(false); // Close drawer after navigation
   };
-
-  useEffect(() => {
-    // Check screen size and update isDesktop state
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768); // Adjust breakpoint as needed
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check on load
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const {selectedEmail} = useEmail();
   const {setSelectedEmail} = useEmail();
@@ -69,7 +64,6 @@ function HeaderDetailsPage() {
               handleDrawerToggle();
               setSelectedEmail(null);
             }}
-            sx={{display: {sm: 'none'}}}
           >
             <MenuIcon />
           </IconButton>
@@ -86,7 +80,6 @@ function HeaderDetailsPage() {
                 setSelectedEmail(null);
                 navigate('/');
               }}
-              sx={{display: {sm: 'none'}}}
             >
               <CloseIcon />
             </IconButton>
@@ -94,15 +87,11 @@ function HeaderDetailsPage() {
         </Toolbar>
       </AppBar>
 
-      <Box
-        component="nav"
-        aria-label="mailbox folders"
-      >
+      <Box>
         <Drawer
-          variant={isDesktop ? 'permanent' : 'temporary'}
           open={Boolean(mobileOpen)}
           onClose={handleDrawerToggle}
-          PaperProps={{style: {width: '15%'}}}
+          PaperProps={{style: {width: '25%'}}}
           ModalProps={{keepMounted: true}}
         >
           <Toolbar />

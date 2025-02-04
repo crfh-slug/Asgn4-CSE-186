@@ -3,7 +3,7 @@ import {useEmail} from './EmailContext';
 import mail from './data/mail.json';
 import {useHeader} from './HeaderContext';
 import Box from '@mui/material/Box';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 
 /**
  * This file displays the inbox and sets the selected
@@ -15,17 +15,6 @@ function InboxPage() {
   const {setSelectedEmail} = useEmail();
   const {navPage} = useHeader();
   const navigate = useNavigate();
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    // Check screen size and update isDesktop state
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 768); // Adjust breakpoint as needed
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check on load
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const mailLabel = mail.find((m) => m.name === navPage);
 
@@ -64,12 +53,8 @@ function InboxPage() {
 
   return (
     <Box sx={{
-      mt: 6, display: 'flex', flexDirection:
-      isDesktop ? 'row' : 'column', gap: '10px'}}>
+      mt: 6, display: 'flex'}}>
       <Box sx={{
-        width: isDesktop ? '45%' : '100%',
-        marginLeft: isDesktop ? '15%' : '0%',
-        overflowY: 'auto',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -84,7 +69,6 @@ function InboxPage() {
               display: 'flex',
               justifyContent: 'space-between',
               width: '100%',
-              padding: '5px',
               cursor: 'pointer'}}>
             <span style={{width: '25%'}}>{email.from.name}</span>
             <span style={{

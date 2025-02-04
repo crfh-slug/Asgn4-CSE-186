@@ -6,6 +6,13 @@ import Layout from './Layout';
 import {Header} from './HeaderContext';
 
 /**
+ * ChatGPT outlined/recommended using Routes
+ * Understanding <Routes> and <Route path=...> 
+ * https://hygraph.com/blog/routing-in-react
+ * https://www.w3schools.com/react/react_router.asp
+ */
+
+/**
  * Wraps everything with EmailProvider and handles routing.
  * @returns {object} JSX
  */
