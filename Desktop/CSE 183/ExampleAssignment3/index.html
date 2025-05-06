@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe - Vue.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 5px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background-color: #f2f2f2;
+      font-size: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid #ccc;
+    }
+
+    .cell:hover {
+      background-color: #ddd;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+
+    .message {
+      font-size: 20px;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Tic Tac Toe - Player vs Computer (Vue)</h1>
+    <div class="board">
+      <div
+        class="cell"
+        v-for="(cell, index) in board"
+        :key="index"
+        @click="makeMove(index)"
+      >
+        {{ cell }}
+      </div>
+    </div>
+    <button @click="resetBoard">Reset</button>
+    <div class="message">{{ message }}</div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        board: Array(9).fill(''),
+        playerTurn: true,
+        message: ''
+      },
+      methods: {
+        makeMove(index) {
+          if (this.board[index] === '' && this.playerTurn && this.message === '') {
+            this.$set(this.board, index, 'X');
+            this.playerTurn = false;
+            if (!this.checkWinner('X')) {
+              this.computerMove();
+            }
+          }
+        },
+        computerMove() {
+          const emptyIndices = this.board
+            .map((val, i) => val === '' ? i : null)
+            .filter(i => i !== null);
+
+          if (emptyIndices.length === 0) return;
+
+          const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+          this.$set(this.board, randomIndex, 'O');
+          this.playerTurn = true;
+          this.checkWinner('O');
+        },
+        checkWinner(player) {
+          const winPatterns = [
+            [0,1,2],[3,4,5],[6,7,8],
+            [0,3,6],[1,4,7],[2,5,8],
+            [0,4,8],[2,4,6]
+          ];
+
+          for (const pattern of winPatterns) {
+            if (pattern.every(i => this.board[i] === player)) {
+              this.message = `${player} wins!`;
+              return true;
+            }
+          }
+
+          if (!this.board.includes('')) {
+            this.message = "It's a draw!";
+            return false;
+          }
+
+          return false;
+        },
+        resetBoard() {
+          this.board = Array(9).fill('');
+          this.playerTurn = true;
+          this.message = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
